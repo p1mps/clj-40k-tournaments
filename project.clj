@@ -8,7 +8,7 @@
 
   :dependencies [[org.clojure/clojure "1.9.0"]
                  [org.clojure/clojurescript "1.10.339"]
-                 ;;[com.cemerick/friend "0.2.3"]
+                 [hiccup-bootstrap "0.1.2"]
                  [buddy/buddy-auth "2.2.0"]
                  [buddy "2.0.0"]
                  [compojure "1.6.1"]
