@@ -9,13 +9,22 @@
 (defn get-app-element []
   (gdom/getElement "app"))
 
-(defn hello-world []
-  [:div
-   [:h1 (:text @app-state)]
-   [:h3 "Edit this in src/clj_40k_tournaments/core.cljs and watch it change!"]])
+(defn register []
+  [:h1 "REGISTER"])
+
+(defn login []
+  [:form {:class "form-signin"}
+   [:h1 {:class "white h3 mb-3 font-weight-normal"} "Please sign in"]
+   [:input {:type "email" :id "inputEmail" :class "form-control" :placeholder "Email address" :required ""}]
+   [:input {:type "password" :id "inputpassword" :class "form-control" :placeholder "Password" :required ""}]
+   [:div {:class "checkbox mb-3"}
+    [:button {:class "main-btn btn btn-lg btn-primary btn-block login-btn"} "Login" ]]
+   [:div {:class "login-footer"}
+    [:a {:href "#" :class "white" :on-click #(register)} "Create New Account"]]
+   ])
 
 (defn mount [el]
-  (reagent/render-component [hello-world] el))
+  (reagent/render-component [login] el))
 
 (defn mount-app-element []
   (when-let [el (get-app-element)]
