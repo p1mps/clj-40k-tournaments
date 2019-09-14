@@ -1,6 +1,6 @@
 (ns clj-40k-tournaments.server
   (:require
-   [compojure.core :refer [defroutes GET]]
+   [compojure.core :refer [defroutes GET POST]]
    [compojure.route :as route]
    [hiccup.bootstrap.middleware :refer [wrap-bootstrap-resources]]
    [hiccup.bootstrap.page :refer [include-bootstrap]]
@@ -23,10 +23,16 @@
     (include-bootstrap)
     (include-js "/cljs-out/dev-main.js")]))
 
+(defn login[]
+  {:status 200
+   :headers {"Content-Type" "application/json"}
+   :body "ok"})
+
 (defroutes handler
   (GET "/status" _ {:status 200
                     :headers {"Content-Type" "application/json"}
                     :body "ok"})
+  (POST "/login" [] (login))
   (GET "/" [] (index-html))
   (route/not-found "<h1>Page not found</h1>"))
 

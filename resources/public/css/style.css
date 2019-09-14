@@ -1,3 +1,11 @@
+a, h1, label {
+    color: white;
+}
+
+.white {
+    color: white;
+}
+
 .main {
     height: 100vh;
     width: 100vw;
@@ -56,20 +64,11 @@
     width: 100%;
 }
 
-.white {
+.login-links {
+    margin-top: 10px;
+}
+
+.login-links > a {
+    margin: 10px;
     color: white;
-}
-
-.login-footer {
-    text-align: center;
-    font-size: 13px;
-    justify-content: center;
-}
-
-a {
-    color: white;
-}
-
-blue {
-    color: blue;
 }

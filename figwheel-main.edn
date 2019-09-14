@@ -13,6 +13,7 @@
  ;; is for simple ring servers
  :ring-handler clj-40k-tournaments.server/app
 
+ :css-dirs ["resources/public/css"]
  ;; To be able to open files in your editor from the heads up display
  ;; you will need to put a script on your path. This script will have
  ;; to take a file path and a line number ie.
