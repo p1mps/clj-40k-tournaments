@@ -5,7 +5,11 @@
             [reagent.core :as reagent :refer [render-component]]))
 
 (defroute "/login" {}
+  (println "login")
   (reagent/render-component [views/login] (core/get-app-element)))
 
 (defroute "/register" {}
   (reagent/render-component [views/register] (core/get-app-element)))
+
+(defroute "/home" {}
+  (reagent/render-component [views/home] (core/get-app-element)))

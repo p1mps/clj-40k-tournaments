@@ -1,5 +1,9 @@
 (ns clj-40k-tournaments.server
   (:require
+   [ring.middleware.json :refer [wrap-json-response]]
+   [buddy.auth.backends :as backends]
+   [buddy.auth.middleware :refer [wrap-authentication]]
+   [ring.util.response :refer [response]]
    [compojure.core :refer [defroutes GET POST]]
    [compojure.route :as route]
    [hiccup.bootstrap.middleware :refer [wrap-bootstrap-resources]]
@@ -23,20 +27,22 @@
     (include-bootstrap)
     (include-js "/cljs-out/dev-main.js")]))
 
-(defn login[]
-  {:status 200
-   :headers {"Content-Type" "application/json"}
-   :body "ok"})
+(def backend (backends/session))
+
+(defn login[data]
+  (response data))
 
 (defroutes handler
   (GET "/status" _ {:status 200
                     :headers {"Content-Type" "application/json"}
                     :body "ok"})
-  (POST "/login" [] (login))
+  (POST "/login" request (login (:form-params request)))
   (GET "/" [] (index-html))
   (route/not-found "<h1>Page not found</h1>"))
 
 
 (def app
   (-> handler
+      (wrap-authentication backend)
+      (wrap-json-response)
       (wrap-bootstrap-resources)))
