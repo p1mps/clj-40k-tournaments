@@ -64,3 +64,11 @@ a {
 blue {
     color: blue;
 }
+
+.login-links a {
+    padding: 10px;
+}
+
+.form-group input {
+    margin-bottom: 20px;
+}
