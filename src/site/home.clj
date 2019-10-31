@@ -1,8 +1,7 @@
 (ns site.home
   (:require
    [coast]
-   [hiccup.page :refer [html5 include-js include-css]]
-   [hiccup.bootstrap.page :refer [include-bootstrap]]))
+   [hiccup.page :refer [html5 include-js include-css]]))
 
 (defn index [body]
   [:head
