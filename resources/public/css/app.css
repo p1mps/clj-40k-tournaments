@@ -1,18 +1,6 @@
-html, body {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-}
-
-a, h1, label {
-    color: white;
-}
-
-.white {
-    color: white;
-}
-
 .main {
-    height: 100vh;
-    width: 100vw;
+    height: 100%;
+    width: 100%;
     display: -ms-flexbox;
     display: -webkit-box;
     display: flex;
@@ -30,12 +18,11 @@ a, h1, label {
 }
 
 .form-signin {
-    width: 100vw;
+    width: 100%;
     max-width: 330px;
     padding: 15px;
     margin: 0 auto;
 }
-
 .form-signin .checkbox {
     font-weight: 400;
     padding: 10px;
@@ -43,7 +30,6 @@ a, h1, label {
 .form-signin .form-control {
     position: relative;
     box-sizing: border-box;
-    width: 100%;
     height: auto;
     padding: 10px;
     font-size: 16px;
@@ -64,15 +50,17 @@ a, h1, label {
 
 .login-btn {
     position: relative;
-    top: 5px;
-    width: 100%;
+    top: 10px;
 }
 
-.login-links {
-    margin-top: 10px;
-}
-
-.login-links > a {
-    margin: 10px;
+.white {
     color: white;
+}
+
+a {
+    color: white;
+}
+
+blue {
+    color: blue;
 }
