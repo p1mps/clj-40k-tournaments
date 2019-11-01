@@ -1,7 +1,8 @@
 (ns site.home
-  (:require
-   [coast]
-   [hiccup.page :refer [html5 include-js include-css]]))
+  (:require coast
+            email
+            [hiccup.page :refer [html5 include-css include-js]]
+            user))
 
 (defn index [body]
   [:head
@@ -17,13 +18,11 @@
   (index
          [:div {:class "main text-center"}
           [:form {:id "register" :action "/register" :method "post"}
-           (coast/csrf)
            [:h1 {:class "white"} "Register"]
            [:div {:class "form-group"}
-            [:input {:type "email" :id "inputEmail" :class "form-control" :placeholder "Email address" :required ""}]
-            [:input {:type "password" :id "inputpassword" :class "form-control" :placeholder "Password" :required ""}]]
+            (coast/csrf)
+            [:input {:name "email" :type "email" :id "inputEmail" :class "form-control" :placeholder "Email address" :required ""}]]
            [:button {:class "btn btn-lg btn-primary btn-block login-btn mb-5"} "Register" ]
-
            [:div {:class "login-links"}
             [:a {:href "/register"} "Register"]
             [:a {:href "/"} "Login"]]]]))
@@ -32,7 +31,6 @@
   (index
          [:div {:class "main text-center"}
           [:form {:id "login" :action "/login" :method "post"}
-           (coast/csrf)
            [:h1 {:class "white"} "Please sign in"]
            [:div {:class "form-group"}
             [:input {:type "email" :id "inputEmail" :class "form-control" :placeholder "Email address" :required ""}]
@@ -40,10 +38,16 @@
            [:button {:class "btn btn-lg btn-primary btn-block login-btn mb-5"} "Login"]
            [:div {:class "login-links"}
             [:a {:href "/register" :class "white"} "Register"]
-            [:a {:href "/" :class "white"} "Login"]]]]))
+            [:a {:href "/" :class "white"} "Login"]]
+           (coast/csrf)]]))
 
 (defn register-post [request]
-  (println request))
+  (email/send-registration-email (:email (:params request)) (user/generate-password))
+  (index [:div {:class "main text-center"}
+          [:form {:id "login" :action "/login" :method "post"}
+           [:h1 {:class "white"} "We sent you the registration email!"]
+           [:div {:class "login-links"}
+            [:a {:href "/" :class "white"} "Go back"]]]]))
 
 (defn login-post [request]
   (println request))
