@@ -11,7 +11,6 @@
         [:get "/register" :site.home/register]
         [:post "/login" :site.home/login-post]
         [:post "/register" :site.home/register-post]))
-
     (coast/with middleware/auth
                 [:get "/dashboard" :site.home/dashboard])
 
