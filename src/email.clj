@@ -1,7 +1,5 @@
 (ns email
-  (:require
-   [postal.core]
-   ))
+  (:require postal.core))
 
 (def smtp-credentials
   (:smtp-credentials (read-string (slurp "secrets.edn"))))

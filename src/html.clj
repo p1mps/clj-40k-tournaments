@@ -26,8 +26,8 @@
    [:form {:id "login" :action "/login" :method "post"}
     [:h1 {:class "white"} "Please sign in"]
     [:div {:class "form-group"}
-     [:input {:type "email" :id "inputEmail" :class "form-control" :placeholder "Email address" :required ""}]
-     [:input {:type "password" :id "inputPassword" :class "form-control" :placeholder "Password" :required ""}]]
+     [:input {:type "email" :name "email" :id "inputEmail" :class "form-control" :placeholder "Email address" :required ""}]
+     [:input {:type "password" :name "password" :id "inputPassword" :class "form-control" :placeholder "Password" :required ""}]]
     [:button {:class "btn btn-lg btn-primary btn-block login-btn mb-5"} "Login"]
     [:div {:class "login-links"}
      [:a {:href "/register" :class "white"} "Register"]
@@ -47,8 +47,8 @@
     [:h1 {:class "white"} "Please sign in"]
     [:div {:class "form-group"}
      [:h3 {:class "white"} "Username or password wrong!"]
-     [:input {:type "email" :id "inputEmail" :class "form-control" :placeholder "Email address" :required ""}]
-     [:input {:type "password" :id "inputPassword" :class "form-control" :placeholder "Password" :required ""}]]
+     [:input {:type "email" :name "email" :id "inputEmail" :class "form-control" :placeholder "Email address" :required ""}]
+     [:input {:type "password" :name "password"  :id "inputPassword" :class "form-control" :placeholder "Password" :required ""}]]
     [:button {:class "btn btn-lg btn-primary btn-block login-btn mb-5"} "Login"]
     [:div {:class "login-links"}
      [:a {:href "/register" :class "white"} "Register"]
