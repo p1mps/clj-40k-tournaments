@@ -64,7 +64,8 @@
             [:li.nav-item.active
              [:a.nav-link {:href "#"} "Book" [:span.sr-only "(current)"]]]
             [:li.nav-item [:a.nav-link {:href "#"} "Record"]]
-            [:li.nav-item [:a.nav-link {:href "#"} "List"]]] ] ]
+            [:li.nav-item [:a.nav-link {:href "#"} "List"]]]
+           [:a.nav-item [:a.nav-link {:href "#"} "Logout"]]]]
         body))
 
 
