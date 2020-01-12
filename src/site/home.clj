@@ -33,7 +33,8 @@
 
 
 (defn dashboard [request]
-  (-> (html/dashboard-header) (html/header)))
+  (html/header
+   (html/dashboard-header (html/dashboard-body))))
 
 
 (comment

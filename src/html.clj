@@ -1,13 +1,14 @@
 (ns html
-  (:require coast))
+  (:require coast
+            hiccup.page))
 
 (defn header [body]
   [:head
    [:meta {:charset "UTF-8"}]
    [:meta {:name "viewport"
            :content "width=device-width, initial-scale=1"}]
-   [:link {:rel "shortcut icon" :type "image/x-icon" :href "/favicon.ico"}]]
-  body)
+   [:link {:rel "shortcut icon" :type "image/x-icon" :href "/favicon.ico"}] body]
+  )
 
 (defn register-form []
   [:div {:class "main text-center"}
@@ -55,15 +56,16 @@
      [:a {:href "/" :class "white"} "Login"]]
     (coast/csrf)]])
 
-(defn dashboard-header []
-  [:nav.navbar.navbar-expand-lg.navbar-light.bg-light
-   [:a.navbar-brand {:href "#"} "Navbar"]
-   [:button.navbar-toggler {:type "button", :data-toggle "collapse", :data-target "#navbarSupportedContent", :aria-controls "navbarSupportedContent", :aria-expanded "false", :aria-label "Toggle navigation"} [:span.navbar-toggler-icon]]
-   [:div#navbarSupportedContent.collapse.navbar-collapse
-    [:ul.navbar-nav.mr-auto
-     [:li.nav-item.active
-      [:a.nav-link {:href "#"} "Home" [:span.sr-only "(current)"]]]
-     [:li.nav-item [:a.nav-link {:href "#"} "Link"]]]]])
+(defn dashboard-header [body]
+  (list [:nav.navbar.navbar-expand-lg.navbar-dark.bg-dark
+         [:button.navbar-toggler {:type "button", :data-toggle "collapse", :data-target "#navbarSupportedContent", :aria-controls "navbarSupportedContent", :aria-expanded "false", :aria-label "Toggle navigation"} [:span.navbar-toggler-icon]]
+          [:div#navbarSupportedContent.collapse.navbar-collapse
+           [:ul.navbar-nav.mr-auto
+            [:li.nav-item.active
+             [:a.nav-link {:href "#"} "Book" [:span.sr-only "(current)"]]]
+            [:li.nav-item [:a.nav-link {:href "#"} "Record"]]
+            [:li.nav-item [:a.nav-link {:href "#"} "List"]]] ] ]
+        body))
 
 
 (def form-inline-header
@@ -77,3 +79,7 @@
     [:a.dropdown-item {:href "#"} "Action"]
     [:a.dropdown-item {:href "#"} "Another action"]
     [:div.dropdown-divider] [:a.dropdown-item {:href "#"} "Something else here"]]])
+
+(defn dashboard-body []
+  [:div {:class "main text-center"}
+   [:h1 "Eccoci qua"]])
