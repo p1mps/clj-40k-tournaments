@@ -33,8 +33,7 @@
 
 
 (defn dashboard [request]
-  (println request "dashboarddddddd")
-  request)
+  (-> (html/dashboard-header) (html/header)))
 
 
 (comment

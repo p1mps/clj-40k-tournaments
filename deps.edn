@@ -4,6 +4,7 @@
  {org.clojure/clojure         {:mvn/version "1.10.0"}
   coast-framework/coast.theta {:mvn/version "1.5.0"}
   com.draines/postal          {:mvn/version "2.0.3"}
+  hiccup-bridge               {:mvn/version "1.0.1"}
   org.xerial/sqlite-jdbc      {:mvn/version "3.25.2"}}
 
  :aliases
