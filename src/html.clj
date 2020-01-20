@@ -56,15 +56,35 @@
      [:a {:href "/" :class "white"} "Login"]]
     (coast/csrf)]])
 
+;; items [{:href
+;;         :text
+;;         :active}]
+(defn header-links [items]
+  (for [item items]
+    (if (:active item)
+      [:li.nav-item.active {:id (:id item)}
+       [:a.nav-link {:href (:href item)} (:text item) [:span.sr-only "(current)"]]]
+      [:li.nav-item {:id (:id item)}
+       [:a.nav-link {:href (:href item)} (:text item)]])))
+
 (defn dashboard-header [body]
   (list [:nav.navbar.navbar-expand-lg.navbar-dark.bg-dark
          [:button.navbar-toggler {:type "button", :data-toggle "collapse", :data-target "#navbarSupportedContent", :aria-controls "navbarSupportedContent", :aria-expanded "false", :aria-label "Toggle navigation"} [:span.navbar-toggler-icon]]
           [:div#navbarSupportedContent.collapse.navbar-collapse
            [:ul.navbar-nav.mr-auto
-            [:li.nav-item.active
-             [:a.nav-link {:href "#"}"Request a game" [:span.sr-only "(current)"]]]
-            [:li.nav-item [:a.nav-link {:href "#"} "Games"]]
-            [:li.nav-item [:a.nav-link {:href "#"} "Record a game"]]]
+            (header-links
+             [{:href "#"
+               :id "home"
+               :text "Request a game"
+               :active true}
+              {:href "#"
+               :id "games"
+               :text "Games"
+               :active false}
+              {:href "#"
+               :id "record"
+               :text "Record a game"
+               :active false}])]
            [:a.nav-item [:a.nav-link {:href "#"} "Logout"]]]]
         body))
 
@@ -89,7 +109,7 @@
      [:input#date.form-control
       {:name "date", :placeholder "MM/DD/YYY", :type "text"}]]
     [:div.form-group
-     [:label {:for "hour"} "Hour"]
+     [:label {:for "hour"} "Hour (optional)"]
      [:input#exampleInputPassword1.form-control
       {:type "text", :placeholder "18:00"}]]
     [:button.btn.btn-primary {:type "submit"} "Submit"]]])
