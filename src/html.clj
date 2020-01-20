@@ -7,8 +7,8 @@
    [:meta {:charset "UTF-8"}]
    [:meta {:name "viewport"
            :content "width=device-width, initial-scale=1"}]
-   [:link {:rel "shortcut icon" :type "image/x-icon" :href "/favicon.ico"}] body]
-  )
+   [:link {:rel "shortcut icon" :type "image/x-icon" :href "/favicon.ico"}]
+   body])
 
 (defn register-form []
   [:div {:class "main text-center"}
@@ -62,9 +62,9 @@
           [:div#navbarSupportedContent.collapse.navbar-collapse
            [:ul.navbar-nav.mr-auto
             [:li.nav-item.active
-             [:a.nav-link {:href "#"} "Book" [:span.sr-only "(current)"]]]
-            [:li.nav-item [:a.nav-link {:href "#"} "Record"]]
-            [:li.nav-item [:a.nav-link {:href "#"} "List"]]]
+             [:a.nav-link {:href "#"}"Request a game" [:span.sr-only "(current)"]]]
+            [:li.nav-item [:a.nav-link {:href "#"} "Games"]]
+            [:li.nav-item [:a.nav-link {:href "#"} "Record a game"]]]
            [:a.nav-item [:a.nav-link {:href "#"} "Logout"]]]]
         body))
 
@@ -83,4 +83,13 @@
 
 (defn dashboard-body []
   [:div {:class "main text-center"}
-   [:h1 "Eccoci qua"]])
+   [:form
+    [:div.form-group
+     [:label.control-label {:for "date"} "Date"]
+     [:input#date.form-control
+      {:name "date", :placeholder "MM/DD/YYY", :type "text"}]]
+    [:div.form-group
+     [:label {:for "hour"} "Hour"]
+     [:input#exampleInputPassword1.form-control
+      {:type "text", :placeholder "18:00"}]]
+    [:button.btn.btn-primary {:type "submit"} "Submit"]]])
