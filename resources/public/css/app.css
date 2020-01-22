@@ -76,3 +76,7 @@ blue {
 label {
     color: white;
 }
+
+.button-table {
+    margin: 5px;
+}

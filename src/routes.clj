@@ -9,7 +9,9 @@
     (coast/with-layout :components/layout
       [:get "/" :site.home/login]
       [:get "/register" :site.home/register]
+      [:get "/games" :site.home/games]
       [:post "/login" :site.home/login-post]
+      [:post "/logout" :site.home/login-post]
       [:post "/register" :site.home/register-post]
       (coast/with middleware/auth
                   [:get "/dashboard" :site.home/dashboard])))

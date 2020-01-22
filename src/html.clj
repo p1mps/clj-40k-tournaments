@@ -77,7 +77,7 @@
                :id "home"
                :text "Request a game"
                :active true}
-              {:href "#"
+              {:href "/games"
                :id "games"
                :text "Games"
                :active false}
@@ -110,6 +110,37 @@
       {:name "date", :placeholder "MM/DD/YYY", :type "text"}]]
     [:div.form-group
      [:label {:for "hour"} "Hour (optional)"]
-     [:input#exampleInputPassword1.form-control
-      {:type "text", :placeholder "18:00"}]]
+     [:input#hour.form-control
+      {:type "time" :placeholder "18:00"}]
+     [:label {:for "points"} "Points (optional)"]
+     [:input#hour.form-control
+      {:type "number" :placeholder "2000"}]]
     [:button.btn.btn-primary {:type "submit"} "Submit"]]])
+
+(defn table-body [games]
+  (for [game games]
+    [:tr
+     [:th {:game/scope "row"} "1"]
+     [:td (:game/user game)]
+     [:td (:game/user-2 game)]
+     [:td (:game/points game)]
+     [:td (:game/date game)]
+     [:td
+      [:button.btn.btn-primary.button-table {:type "button"} "Play"]
+      [:button.btn.btn-secondary.button-table  {:type "button"} "Edit"]
+      [:button.btn.btn-danger.button-table  {:type "button"} "Delete"]]
+     ]))
+
+(defn games [games]
+  (let [table-data (table-body games)]
+    [:table.table
+     [:thead
+      [:tr
+       [:th {:scope "col"} "#"]
+       [:th {:scope "col"} "Player1"]
+       [:th {:scope "col"} "Player2"]
+       [:th {:scope "col"} "Points"]
+       [:th {:scope "col"} "Date"]
+       [:th {:scope "col"} "Action"]]]
+     [:tbody
+      table-data]]))

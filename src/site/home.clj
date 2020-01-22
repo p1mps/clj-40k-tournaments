@@ -28,13 +28,22 @@
     (if (and (= email user-email-db) (= password user-password-db))
       (-> (coast/redirect-to :site.home/dashboard)
           (coast/flash "Logged in")
-          (assoc :session {:member/email user-password-db}))
+          (assoc :session {:member/email user-email-db})
+          )
       (-> (html/wrong-login) (html/header)))))
 
 
 (defn dashboard [request]
   (html/header
    (html/dashboard-header (html/dashboard-body))))
+
+(defn games [request]
+  (let [games (coast/q '[:select *
+                         :from game])]
+    (println games)
+    (html/header
+     (html/dashboard-header (html/games games)))))
+
 
 (comment
   (coast/q '[:select *
