@@ -59,32 +59,26 @@
 ;; items [{:href
 ;;         :text
 ;;         :active}]
-(defn header-links [items]
+(defn header-links [items active]
   (for [item items]
-    (if (:active item)
+    (if (= active (:id item))
       [:li.nav-item.active {:id (:id item)}
        [:a.nav-link {:href (:href item)} (:text item) [:span.sr-only "(current)"]]]
       [:li.nav-item {:id (:id item)}
        [:a.nav-link {:href (:href item)} (:text item)]])))
 
-(defn dashboard-header [body]
+(defn dashboard-header [body active]
   (list [:nav.navbar.navbar-expand-lg.navbar-dark.bg-dark
          [:button.navbar-toggler {:type "button", :data-toggle "collapse", :data-target "#navbarSupportedContent", :aria-controls "navbarSupportedContent", :aria-expanded "false", :aria-label "Toggle navigation"} [:span.navbar-toggler-icon]]
           [:div#navbarSupportedContent.collapse.navbar-collapse
            [:ul.navbar-nav.mr-auto
             (header-links
-             [{:href "#"
-               :id "home"
-               :text "Request a game"
-               :active true}
+             [{:href "/dashboard"
+               :id "dashboard"
+               :text "Request a game"}
               {:href "/games"
                :id "games"
-               :text "Games"
-               :active false}
-              {:href "#"
-               :id "record"
-               :text "Record a game"
-               :active false}])]
+               :text "Games"}] active)]
            [:a.nav-item [:a.nav-link {:href "#"} "Logout"]]]]
         body))
 
@@ -102,7 +96,7 @@
     [:div.dropdown-divider] [:a.dropdown-item {:href "#"} "Something else here"]]])
 
 (defn dashboard-body []
-  [:div {:class "main text-center"}
+  [:div.main.text-center
    [:form
     [:div.form-group
      [:label.control-label {:for "date"} "Date"]
@@ -117,7 +111,7 @@
       {:type "number" :placeholder "2000"}]]
     [:button.btn.btn-primary {:type "submit"} "Submit"]]])
 
-(defn table-body [games]
+(defn table-body [games user-id]
   (for [game games]
     [:tr
      [:th {:game/scope "row"} "1"]
@@ -126,21 +120,28 @@
      [:td (:game/points game)]
      [:td (:game/date game)]
      [:td
-      [:button.btn.btn-primary.button-table {:type "button"} "Play"]
-      [:button.btn.btn-secondary.button-table  {:type "button"} "Edit"]
-      [:button.btn.btn-danger.button-table  {:type "button"} "Delete"]]
-     ]))
+      [:div.btn-group
+       (when (nil? (:game/user-2 game) )
+         [:form {:action (str "/pair/" (:game/id game) "/" user-id) :method "post"}
+          (coast/csrf)
+          [:button.btn.btn-primary.button-table {:name "pair" :value "1" :type "submit"} "Pair"]])
+       [:form {:action (str "/games/" (:game/id game)) :method "post"}
+        [:button.btn.btn-secondary.button-table  {:type "input"} "Update"]]
+       [:form {:action (str "/pair/" (:game/id game) "/" user-id) :method "post"}
+        (coast/csrf)
+        [:button.btn.btn-danger.button-table  {:type "button"} "Delete"]]]]]))
 
-(defn games [games]
-  (let [table-data (table-body games)]
-    [:table.table
-     [:thead
-      [:tr
-       [:th {:scope "col"} "#"]
-       [:th {:scope "col"} "Player1"]
-       [:th {:scope "col"} "Player2"]
-       [:th {:scope "col"} "Points"]
-       [:th {:scope "col"} "Date"]
-       [:th {:scope "col"} "Action"]]]
-     [:tbody
-      table-data]]))
+(defn games [games user-id]
+  [:div.main.white
+   (let [table-data (table-body games user-id)]
+     [:table#table.table
+      [:thead
+       [:tr
+        [:th {:scope "col"} "#"]
+        [:th {:scope "col"} "Player1"]
+        [:th {:scope "col"} "Player2"]
+        [:th {:scope "col"} "Points"]
+        [:th {:scope "col"} "Date"]
+        [:th {:scope "col"} "Action"]]]
+      [:tbody
+       table-data]])])

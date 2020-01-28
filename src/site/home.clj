@@ -1,5 +1,6 @@
 (ns site.home
   (:require coast
+            db
             html
             [ring.util.response :as response]
             [hiccup.page :refer [html5 include-css include-js]]
@@ -35,18 +36,31 @@
 
 (defn dashboard [request]
   (html/header
-   (html/dashboard-header (html/dashboard-body))))
+   (html/dashboard-header (html/dashboard-body) "dashboard")))
 
 (defn games [request]
   (let [games (coast/q '[:select *
-                         :from game])]
-    (println games)
+                         :from game])
+        user-email (get-in request [:session :member/email])
+        user-id (:user/id (first (coast/q '[:select id :from user :where  [email ?email]] {:email user-email})))]
     (html/header
-     (html/dashboard-header (html/games games)))))
+     (html/dashboard-header (html/games games user-id) "games"))))
+
+;;  :game-id 1, :user-id 5
+(defn pair-post [{:keys [params]}]
+  (let [game (db/find-row "game" (:game-id params))
+        user (db/find-row "user" (:user-id params))
+        game (assoc game :user_2 (:user/id user))]
+    (coast/execute! [:update 'game
+                     :set [:user-2 (:id user)]
+                     :where [:id (:id game)]])
+    (coast/redirect-to :site.home/games)))
 
 
 (comment
-  (coast/q '[:select *
-             :from user])
+  (coast/execute! [:update 'game
+                   :set [:user-2 1]
+                   :where [:id 1]])
+
 
   )

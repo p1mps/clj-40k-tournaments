@@ -12,7 +12,7 @@
     justify-content: center;
     padding-top: 40px;
     padding-bottom: 40px;
-    background-image: url("../img/background.jpg");
+    background-image: url("../images/background.jpg");
     background-repeat: no-repeat;
     background-size:cover;
 }
@@ -79,4 +79,16 @@ label {
 
 .button-table {
     margin: 5px;
+}
+
+thead {
+    color: white;
+}
+
+.dataTables_length,
+.dataTables_filter,
+.dataTables_info,
+.dataTables_paginate a {
+    color: white !important;
+    font-weight: bold;
 }
