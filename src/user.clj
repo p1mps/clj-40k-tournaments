@@ -12,3 +12,7 @@
   (let [password (generate-password)]
     (coast/insert {:user/email user-email :user/password password})
     (email/send-registration-email user-email password)))
+
+(defn logged-in-user [request]
+  (let [user-email (get-in request [:session :member/email])]
+    (coast/q [:select '* :from 'user :where [:user/email user-email]])))

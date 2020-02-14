@@ -16,6 +16,7 @@
     [:h1 {:class "white"} "Register"]
     [:div {:class "form-group"}
      (coast/csrf)
+     [:input {:name "name" :type "text" :id "inputName" :class "form-control" :placeholder "Player Name" :required ""}]
      [:input {:name "email" :type "email" :id "inputEmail" :class "form-control" :placeholder "Email address" :required ""}]]
     [:button {:class "btn btn-lg btn-primary btn-block login-btn mb-5"} "Register" ]
     [:div {:class "login-links"}
@@ -97,18 +98,19 @@
 
 (defn dashboard-body []
   [:div.main.text-center
-   [:form
+   [:form {:method "post" :action "/games"}
     [:div.form-group
      [:label.control-label {:for "date"} "Date"]
      [:input#date.form-control
       {:name "date", :placeholder "MM/DD/YYY", :type "text"}]]
     [:div.form-group
+     [:label {:for "points"} "Points"]
+     [:input#hour.form-control
+      {:name "points" :type "number" :placeholder "2000"}]
      [:label {:for "hour"} "Hour (optional)"]
      [:input#hour.form-control
-      {:type "time" :placeholder "18:00"}]
-     [:label {:for "points"} "Points (optional)"]
-     [:input#hour.form-control
-      {:type "number" :placeholder "2000"}]]
+      {:name "hour" :type "time" :placeholder "18:00"}]]
+    (coast/csrf)
     [:button.btn.btn-primary {:type "submit"} "Submit"]]])
 
 (defn table-body [games user-id]

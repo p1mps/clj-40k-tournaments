@@ -9,12 +9,14 @@
     (coast/with-layout :components/layout
       [:get "/" :site.home/login]
       [:get "/register" :site.home/register]
-      [:get "/games" :site.home/games]
       [:post "/login" :site.home/login-post]
-      [:post "/pair/:game-id/:user-id" :site.home/pair-post]
-      [:post "/logout" :site.home/login-post]
       [:post "/register" :site.home/register-post]
       (coast/with middleware/auth
+                  [:post "/games" :site.home/game-post]
+                  [:post "/pair/:game-id/:user-id" :site.home/pair-post]
+                  [:post "/logout" :site.home/login-post]
+                  [:get "/games" :site.home/games]
+                  [:put "/games/game=id" :site.home/edit-games]
                   [:get "/dashboard" :site.home/dashboard])))
 
     ;; (coast/api

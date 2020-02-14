@@ -1,6 +1,7 @@
 (ns site.home
   (:require coast
             db
+            email
             html
             [ring.util.response :as response]
             [hiccup.page :refer [html5 include-css include-js]]
@@ -56,11 +57,23 @@
                      :where [:id (:id game)]])
     (coast/redirect-to :site.home/games)))
 
+(defn game-post [request]
+  (let [{date :date
+         hour :hour
+         points :points} (:params request)
+        user (user/logged-in-user request)]
+    (coast/insert {:game/date date :game/points points :game/hour hour})
+    (email/send-game-request-email user date points hour)
+    (coast/redirect-to :site.home/dashboard)))
 
 (comment
   (coast/execute! [:update 'game
                    :set [:user-2 1]
                    :where [:id 1]])
 
+  (def params {:date "1" :hour "2"})
+  (let [{date :date hour :hour} params]
+    hour
+    )
 
   )
