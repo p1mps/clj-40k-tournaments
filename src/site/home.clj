@@ -62,9 +62,27 @@
          hour :hour
          points :points} (:params request)
         user (user/logged-in-user request)]
-    (coast/insert {:game/date date :game/points points :game/hour hour})
+    (println (:user/id user))
+    (coast/insert {:game/date date :game/user (:user/id user) :game/points points :game/hour hour})
     (email/send-game-request-email user date points hour)
     (coast/redirect-to :site.home/dashboard)))
+
+(defn game-edit [request]
+  (let [{date :date
+         hour :hour
+         points :points} (:params request)
+        user (user/logged-in-user request)]
+    (println (:user/id user))
+    (coast/insert {:game/date date :game/user (:user/id user) :game/points points :game/hour hour})
+    (email/send-game-request-email user date points hour)
+    (coast/redirect-to :site.home/dashboard)))
+
+(defn game-delete [{:keys [params]}]
+  (let [game-id (:game-id params)]
+    (println params)
+
+    (coast/delete {:game/id game-id})
+    (coast/redirect-to :site.home/games)))
 
 (comment
   (coast/execute! [:update 'game

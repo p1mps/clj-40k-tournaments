@@ -102,14 +102,14 @@
     [:div.form-group
      [:label.control-label {:for "date"} "Date"]
      [:input#date.form-control
-      {:name "date", :placeholder "MM/DD/YYY", :type "text"}]]
+      {:name "date", :placeholder "MM/DD/YYY", :type "text" :required "true"}]]
     [:div.form-group
      [:label {:for "points"} "Points"]
      [:input#hour.form-control
-      {:name "points" :type "number" :placeholder "2000"}]
+      {:name "points" :type "number" :placeholder "2000" :required "true"}]
      [:label {:for "hour"} "Hour (optional)"]
      [:input#hour.form-control
-      {:name "hour" :type "time" :placeholder "18:00"}]]
+      {:name "hour" :type "time" :placeholder "18:00" :required "true"}]]
     (coast/csrf)
     [:button.btn.btn-primary {:type "submit"} "Submit"]]])
 
@@ -123,15 +123,19 @@
      [:td (:game/date game)]
      [:td
       [:div.btn-group
+       ;; pair
        (when (nil? (:game/user-2 game) )
          [:form {:action (str "/pair/" (:game/id game) "/" user-id) :method "post"}
           (coast/csrf)
           [:button.btn.btn-primary.button-table {:name "pair" :value "1" :type "submit"} "Pair"]])
-       [:form {:action (str "/games/" (:game/id game)) :method "post"}
-        [:button.btn.btn-secondary.button-table  {:type "input"} "Update"]]
-       [:form {:action (str "/pair/" (:game/id game) "/" user-id) :method "post"}
+       ;; edit
+       [:form {:action (str "/games/" (:game/id game) "/edit") :method "post"}
         (coast/csrf)
-        [:button.btn.btn-danger.button-table  {:type "button"} "Delete"]]]]]))
+        [:button.btn.btn-secondary.button-table  {:name "update" :value "1" :type "submit"} "Update"]]
+       ;; delete
+       [:form {:action (str "/games/" (:game/id game) "/delete") :method "post"}
+        (coast/csrf)
+        [:button.btn.btn-danger.button-table  {:name "delete" :value "1" :type "submit"} "Delete"]]]]]))
 
 (defn games [games user-id]
   [:div.main.white

@@ -15,4 +15,4 @@
 
 (defn logged-in-user [request]
   (let [user-email (get-in request [:session :member/email])]
-    (coast/q [:select '* :from 'user :where [:user/email user-email]])))
+    (first (coast/q [:select '* :from 'user :where [:user/email user-email]]))))

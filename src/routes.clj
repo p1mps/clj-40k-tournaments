@@ -13,6 +13,8 @@
       [:post "/register" :site.home/register-post]
       (coast/with middleware/auth
                   [:post "/games" :site.home/game-post]
+                  [:post "/games/:game-id/edit" :site.home/game-edit]
+                  [:post "/games/:game-id/delete" :site.home/game-delete]
                   [:post "/pair/:game-id/:user-id" :site.home/pair-post]
                   [:post "/logout" :site.home/login-post]
                   [:get "/games" :site.home/games]
