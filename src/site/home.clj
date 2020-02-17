@@ -1,6 +1,7 @@
 (ns site.home
   (:require coast
             db
+            game
             email
             html
             [ring.util.response :as response]
@@ -67,20 +68,16 @@
     (email/send-game-request-email user date points hour)
     (coast/redirect-to :site.home/dashboard)))
 
-(defn game-edit [request]
-  (let [{date :date
-         hour :hour
-         points :points} (:params request)
-        user (user/logged-in-user request)]
-    (println (:user/id user))
-    (coast/insert {:game/date date :game/user (:user/id user) :game/points points :game/hour hour})
-    (email/send-game-request-email user date points hour)
-    (coast/redirect-to :site.home/dashboard)))
+(defn games-get[{:keys [params]}]
+  (let [game-id (:game-id params)
+        game (first (coast/q [:select '* :from 'game
+                              :where [:id game-id]]))
+        players (game/players game)]
+    (html/header
+     (html/dashboard-header (html/show-game game players) "games"))))
 
 (defn game-delete [{:keys [params]}]
   (let [game-id (:game-id params)]
-    (println params)
-
     (coast/delete {:game/id game-id})
     (coast/redirect-to :site.home/games)))
 

@@ -128,10 +128,9 @@
          [:form {:action (str "/pair/" (:game/id game) "/" user-id) :method "post"}
           (coast/csrf)
           [:button.btn.btn-primary.button-table {:name "pair" :value "1" :type "submit"} "Pair"]])
-       ;; edit
-       [:form {:action (str "/games/" (:game/id game) "/edit") :method "post"}
-        (coast/csrf)
-        [:button.btn.btn-secondary.button-table  {:name "update" :value "1" :type "submit"} "Update"]]
+       ;; get game
+       [:form {:action (str "/games/" (:game/id game)) :method "get"}
+        [:button.btn.btn-secondary.button-table  {:type "submit"} "Update"]]
        ;; delete
        [:form {:action (str "/games/" (:game/id game) "/delete") :method "post"}
         (coast/csrf)
@@ -151,3 +150,26 @@
         [:th {:scope "col"} "Action"]]]
       [:tbody
        table-data]])])
+
+(defn show-game [game players]
+  [:div.main.white
+   [:div.edit-game
+    [:form {:id "game" :action "/games/edit" :method "post"}
+     [:h1 {:class "white"} "Game"]
+     [:div.form-group
+      [:label {:for "winner"} "Winner"]
+      [:select#loser.form-control
+       [:option {:value (:user/id (:player1 players))} (:user/name (:player1 players))]
+       [:option {:value (:user/id (:player2 players))} (:user/name (:player2 players))]]]
+     [:div.form-group
+      [:label {:for "mission"} "Mission (optional)"]
+      [:textarea#mission.form-control
+       {:name "mission" :type "text" :placeholder "Which mission did you play?"}]]
+
+     [:div.form-group
+      [:label {:for "battlereport"} "Battle report (optional)"]
+      [:textarea#report.form-control
+       {:name "report" :type "text" :placeholder "Wanna write the battle report?"}]]
+     (coast/csrf)
+
+     [:button {:class "btn btn-lg btn-primary btn-block login-btn mb-5"} "Save" ]]]])

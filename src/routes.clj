@@ -12,14 +12,23 @@
       [:post "/login" :site.home/login-post]
       [:post "/register" :site.home/register-post]
       (coast/with middleware/auth
+                  [:get "/dashboard" :site.home/dashboard]
+                  ;; GAMES routes
+                  ;; create game
                   [:post "/games" :site.home/game-post]
-                  [:post "/games/:game-id/edit" :site.home/game-edit]
-                  [:post "/games/:game-id/delete" :site.home/game-delete]
-                  [:post "/pair/:game-id/:user-id" :site.home/pair-post]
-                  [:post "/logout" :site.home/login-post]
+                  ;; get games
                   [:get "/games" :site.home/games]
-                  [:put "/games/game=id" :site.home/edit-games]
-                  [:get "/dashboard" :site.home/dashboard])))
+                  ;; get game
+                  [:get "/games/:game-id" :site.home/games-get]
+                  ;; edit game
+                  [:post "/games/:game-id/edit" :site.home/game-edit]
+                  ;; delete game
+                  [:post "/games/:game-id/delete" :site.home/game-delete]
+                  ;; pair
+                  [:post "/pair/:game-id/:user-id" :site.home/pair-post]
+                  ;; logout
+                  [:post "/logout" :site.home/login-post]
+                  )))
 
     ;; (coast/api
     ;;   (coast/with-prefix "/api"

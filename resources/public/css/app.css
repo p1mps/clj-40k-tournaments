@@ -17,6 +17,16 @@
     background-size:cover;
 }
 
+.edit-game {
+    height: 100%;
+    width: 50%;
+    margin-left: 100px;
+    margin-right: 100px;
+    display: block;
+}
+
+
+
 .form-signin {
     width: 100%;
     max-width: 330px;

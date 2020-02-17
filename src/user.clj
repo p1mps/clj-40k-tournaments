@@ -16,3 +16,9 @@
 (defn logged-in-user [request]
   (let [user-email (get-in request [:session :member/email])]
     (first (coast/q [:select '* :from 'user :where [:user/email user-email]]))))
+
+
+(defn user-name [user-id]
+
+
+  )
