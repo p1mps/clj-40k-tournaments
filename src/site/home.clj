@@ -69,16 +69,27 @@
     (coast/redirect-to :site.home/dashboard)))
 
 (defn games-get[{:keys [params]}]
-  (let [game-id (:game-id params)
+  (println "get params" params)
+  (let [game-id (:id params)
         game (first (coast/q [:select '* :from 'game
                               :where [:id game-id]]))
         players (game/players game)]
+    (println game)
     (html/header
      (html/dashboard-header (html/show-game game players) "games"))))
 
 (defn game-delete [{:keys [params]}]
-  (let [game-id (:game-id params)]
+  (let [game-id (:id params)]
     (coast/delete {:game/id game-id})
+    (coast/redirect-to :site.home/games)))
+
+(defn game-edit [{:keys [params]}]
+  (println "EDIITTTTTT")
+  (let [game-data (select-keys params [:id :game/report :game/winner :game/mission])
+        game-data (dissoc game-data :id)
+        game-data (assoc game-data :game/id (:id params))]
+    (println (assoc game-data :game/id (:id params)))
+    (coast/update game-data)
     (coast/redirect-to :site.home/games)))
 
 (comment

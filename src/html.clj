@@ -154,22 +154,21 @@
 (defn show-game [game players]
   [:div.main.white
    [:div.edit-game
-    [:form {:id "game" :action "/games/edit" :method "post"}
+    [:form {:id "game" :action (str "/games/" (:game/id game) "/edit" ) :method "post"}
      [:h1 {:class "white"} "Game"]
      [:div.form-group
       [:label {:for "winner"} "Winner"]
-      [:select#loser.form-control
-       [:option {:value (:user/id (:player1 players))} (:user/name (:player1 players))]
-       [:option {:value (:user/id (:player2 players))} (:user/name (:player2 players))]]]
+      [:select#winner.form-control
+       [:option {:name "game/winner" :value (:user/id (:player1 players))} (:user/name (:player1 players))]
+       [:option {:name "game/winner" :value (:user/id (:player2 players))} (:user/name (:player2 players))]]]
      [:div.form-group
       [:label {:for "mission"} "Mission (optional)"]
-      [:textarea#mission.form-control
-       {:name "mission" :type "text" :placeholder "Which mission did you play?"}]]
-
+      [:textarea.form-control
+       {:name "game/mission" :value (:game/mission game) :type "text" :placeholder "Which mission did you play?"} (:game/mission game)]]
      [:div.form-group
       [:label {:for "battlereport"} "Battle report (optional)"]
       [:textarea#report.form-control
-       {:name "report" :type "text" :placeholder "Wanna write the battle report?"}]]
+       {:name "game/report" :value (:game/report game) :type "text" :placeholder "Wanna write the battle report?"} (:game/report game)]]
      (coast/csrf)
 
      [:button {:class "btn btn-lg btn-primary btn-block login-btn mb-5"} "Save" ]]]])
